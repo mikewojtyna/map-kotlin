@@ -17,7 +17,7 @@ internal class Map(
 /**
  * Island data model used in internal [Map] representation.
  */
-internal class Island(
+internal data class Island(
     /**
      * Land tiles which form this island.
      */
