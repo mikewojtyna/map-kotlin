@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test
 
 class ApiaryModelConversionTest {
     @DisplayName(
-        "should convert Apiary map model with single land tile to " +
-                "internal map representation containing single island with just one " +
-                "tile"
+        "should extract single-tile island when given land-only map"
     )
     @Test
     fun landOnly0() {
@@ -32,36 +30,7 @@ class ApiaryModelConversionTest {
     }
 
     @DisplayName(
-        "should convert Apiary model with two land tiles to internal map " +
-                "containing single island with two tiles"
-    )
-    @Test
-    fun landOnly1() {
-        // given
-        val landTile0 = landTile(0, 0)
-        val landTile1 = landTile(0, 1)
-        /*
-            #X#
-            #X#
-        */
-        val apiaryMap = apiaryMap(landTile0, landTile1)
-
-        // when
-        val internalMap = convert(apiaryMap)
-
-        // then
-        assertThat(internalMap.tiles).containsOnly(landTile0, landTile1)
-        /*
-            #X#
-            #X#
-        */
-        val twoTilesIsland = island(landTile0, landTile1)
-        assertThat(internalMap.islands).containsOnly(twoTilesIsland)
-    }
-
-    @DisplayName(
-        "should convert Apiary model with land and water tiles to " +
-                "internal map containing single island and one water tile"
+        "should extract single-tile island when given land and water map"
     )
     @Test
     fun landAndWater0() {
@@ -87,9 +56,8 @@ class ApiaryModelConversionTest {
     }
 
     @DisplayName(
-        "should convert Apiary model with two land tiles separated " +
-                "by water tile to internal map containing two single-tile islands" +
-                " and one water tile"
+        "should extract two single-tile islands when separated by water in a " +
+                "single line"
     )
     @Test
     fun landAndWater1() {
@@ -126,9 +94,8 @@ class ApiaryModelConversionTest {
     }
 
     @DisplayName(
-        "should convert Apiary model with two connected land rows containing " +
-                "single tile each to internal map containing single two-row " +
-                "island"
+        "should extract island with two tiles connected vertically when given" +
+                " land-only map"
     )
     @Test
     fun landMultiline0() {
@@ -155,9 +122,7 @@ class ApiaryModelConversionTest {
     }
 
     @DisplayName(
-        "should convert Apiary model with three land tiles connected " +
-                "vertically in different rows separated by water to internal map " +
-                "containing single three-tile island"
+        "should extract one three-tile island"
     )
     @Test
     fun landMultiline1() {
@@ -187,7 +152,7 @@ class ApiaryModelConversionTest {
         assertThat(internalMap.islands).containsOnly(island)
     }
 
-    @DisplayName("should extract two three-tile islands from Apiary map")
+    @DisplayName("should extract two three-tile islands")
     @Test
     fun complex0() {
         // given
