@@ -5,6 +5,19 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class ApiaryModelConversionTest {
+    @DisplayName("should converted map contain all tiles of original map")
+    @Test
+    fun mapTiles() {
+        // given
+        val apiaryMap = apiaryMapWithRandomTiles()
+
+        // when
+        val internalMap = convert(apiaryMap)
+
+        // then
+        assertThat(internalMap.tiles).containsOnlyElementsOf(apiaryMap.tiles)
+    }
+
     @DisplayName(
         "should extract single-tile island when given land-only map"
     )
@@ -349,6 +362,21 @@ class ApiaryModelConversionTest {
             island0, island1,
             island2, island3, island4, island5
         )
+    }
+
+    private fun apiaryMapWithRandomTiles(): ApiaryMap {
+        val tiles = mutableListOf<Tile>()
+        for (y in 0..10) {
+            for (x in 0..10) {
+                tiles.add(
+                    Tile(
+                        x, y, if ((x + y) % 2 == 0) Tile.LAND else
+                            Tile.WATER
+                    )
+                )
+            }
+        }
+        return ApiaryMap(tiles)
     }
 
     private fun island(vararg tiles: Tile): Island {
