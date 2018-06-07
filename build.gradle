@@ -2,6 +2,7 @@ buildscript {
     ext {
         kotlinVersion = '1.2.41'
         springBootVersion = '2.0.2.RELEASE'
+        jgraphtVersion = "1.2.0"
     }
     repositories {
         mavenCentral()
@@ -41,6 +42,7 @@ repositories {
 
 
 dependencies {
+    implementation("org.jgrapht:jgrapht-demo:${jgraphtVersion}")
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.springframework.boot:spring-boot-starter-hateoas')
     compile('org.springframework.boot:spring-boot-starter-web')
