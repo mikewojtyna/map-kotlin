@@ -1,12 +1,20 @@
 package pro.buildmysoftware.map
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 /**
  * Apiary map data model.
  */
-internal class ApiaryMap(
+internal class ApiaryMap constructor(
     /**
-     * Tiles of this map.
+     * Attributes field mapping. Contains "tiles" of this map.
      */
-    val tiles: List<Tile>
-)
+    @JsonProperty("attributes") attributes: Attributes
+) {
+    val tiles: List<Tile> = attributes.tiles
+
+    class Attributes constructor(val tiles: List<Tile>)
+}
+
+
 

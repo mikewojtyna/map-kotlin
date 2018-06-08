@@ -9,7 +9,7 @@ private fun randomIsland(): Island {
 }
 
 internal fun apiaryMapWithRandomTiles(): ApiaryMap {
-    return ApiaryMap(randomTiles())
+    return ApiaryMap(ApiaryMap.Attributes(randomTiles()))
 }
 
 private fun randomTiles(): List<Tile> {
@@ -32,7 +32,7 @@ internal fun island(vararg tiles: Tile): Island {
 }
 
 internal fun apiaryMap(vararg tiles: Tile): ApiaryMap {
-    return ApiaryMap(tiles.toList())
+    return ApiaryMap(ApiaryMap.Attributes(tiles.toList()))
 }
 
 internal fun waterTile(x: Int, y: Int): Tile {
