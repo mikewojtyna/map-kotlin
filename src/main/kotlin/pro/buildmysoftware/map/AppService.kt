@@ -35,6 +35,6 @@ internal class AppService(
      * is returned instead.
      */
     fun islands(): Set<Island> {
-        return mapRepository.findAll()[0].islands
+        return mapRepository.findAll().firstOrNull()?.islands ?: emptySet()
     }
 }

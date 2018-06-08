@@ -51,7 +51,7 @@ internal class AppServiceIntegrationTest {
 
     @DisplayName("should return all islands when map exists")
     @Test
-    fun getIslands() {
+    fun getIslands0() {
         // given
         createMap()
 
@@ -62,5 +62,13 @@ internal class AppServiceIntegrationTest {
         assertThat(islands).isNotEmpty
     }
 
+    @DisplayName("should return empty set when map doesn't exist")
+    @Test
+    fun getIslands1() {
+        // when
+        val islands = appService.islands()
 
+        // then
+        assertThat(islands).isEmpty()
+    }
 }
