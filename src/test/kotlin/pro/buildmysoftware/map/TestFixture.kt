@@ -6,6 +6,7 @@ import org.springframework.test.web.client.MockRestServiceServer.createServer
 import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
 import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
 import org.springframework.web.client.RestTemplate
+import java.util.*
 
 internal fun testMapRestTemplate(): RestTemplate {
     val restTemplate = org.springframework.web.client.RestTemplate()
@@ -103,8 +104,16 @@ private fun randomTiles(): List<Tile> {
     return tiles
 }
 
+internal fun island(idGenerator: () -> String, vararg tiles: Tile): Island {
+    return Island(tiles.toSet(), idGenerator())
+}
+
 internal fun island(vararg tiles: Tile): Island {
-    return Island(tiles.toSet())
+    return Island(tiles.toSet(), uniqueId())
+}
+
+private fun uniqueId(): String {
+    return UUID.randomUUID().toString()
 }
 
 internal fun apiaryMap(vararg tiles: Tile): ApiaryMap {

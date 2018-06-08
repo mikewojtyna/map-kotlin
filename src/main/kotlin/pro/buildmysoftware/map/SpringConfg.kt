@@ -3,6 +3,7 @@ package pro.buildmysoftware.map
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
+import java.util.*
 
 /**
  * Spring beans configuration.
@@ -20,10 +21,15 @@ internal class SpringConfg {
 
     /**
      * Returns a reference to the conversion function strategy currently used
-     * in the application.
+     * in the application. This strategy uses a [convert] function supplied
+     * with [UUID] island id generator.
      */
     @Bean
     fun mapConverter(): (ApiaryMap) -> Map {
-        return ::convert
+        return { apiaryMap ->
+            convert(
+                apiaryMap,
+                { UUID.randomUUID().toString() })
+        }
     }
 }

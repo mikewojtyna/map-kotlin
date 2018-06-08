@@ -1,10 +1,28 @@
 package pro.buildmysoftware.map
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 internal class ApiaryModelConversionTest {
+    /**
+     * This id generator returns always the same value, so we can simply use
+     * regular contains* assertj annotations without any hassle. This id
+     * generator is fed to the [pro.buildmysoftware.map.convert] strategy function and when creating
+     * tiles, so always exactly the same id is generated.
+     */
+    private lateinit var fixedIdGenerator: () -> String
+
+    companion object {
+        const val FIXED_ISLAND_ID = "island-id"
+    }
+
+    @BeforeEach
+    fun setup() {
+        fixedIdGenerator = { FIXED_ISLAND_ID }
+    }
+
     @DisplayName("should converted map contain all tiles of original map")
     @Test
     fun mapTiles() {
@@ -362,5 +380,13 @@ internal class ApiaryModelConversionTest {
             island0, island1,
             island2, island3, island4, island5
         )
+    }
+
+    private fun convert(apiaryMap: ApiaryMap): Map {
+        return pro.buildmysoftware.map.convert(apiaryMap, fixedIdGenerator)
+    }
+
+    private fun island(vararg tiles: Tile): Island {
+        return pro.buildmysoftware.map.island(fixedIdGenerator, *tiles)
     }
 }

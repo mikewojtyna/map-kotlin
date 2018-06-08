@@ -7,5 +7,9 @@ internal data class Island(
     /**
      * Land tiles which form this island.
      */
-    val landTiles: Set<Tile>
+    val landTiles: Set<Tile>,
+    /**
+     * Id of this island.
+     */
+    val id: String
 )

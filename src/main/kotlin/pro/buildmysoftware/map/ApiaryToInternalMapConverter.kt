@@ -8,8 +8,11 @@ import kotlin.math.abs
 
 /**
  * Converts [apiaryMap] model data object to internal [Map] representation.
+ * An [islandIdGenerator] is used to create unique ids for each extracted
+ * island.
  */
-internal fun convert(apiaryMap: ApiaryMap): Map {
+internal fun convert(apiaryMap: ApiaryMap, islandIdGenerator: () -> String):
+        Map {
     fun findIslands(apiaryMap: ApiaryMap): Set<Island> {
         fun buildIslandsGraph(apiaryMap: ApiaryMap): Graph<Tile, DefaultEdge> {
             fun isAdjacentTo(source: Tile, target: Tile): Boolean {
@@ -36,7 +39,8 @@ internal fun convert(apiaryMap: ApiaryMap): Map {
             return graph
         }
         return ConnectivityInspector(buildIslandsGraph(apiaryMap))
-            .connectedSets().map { Island(it) }.toSet()
+            .connectedSets().map { Island(it, islandIdGenerator()) }
+            .toSet()
     }
     return Map(
         apiaryMap.tiles.toSet(), findIslands(apiaryMap)
