@@ -363,35 +363,4 @@ internal class ApiaryModelConversionTest {
             island2, island3, island4, island5
         )
     }
-
-    private fun apiaryMapWithRandomTiles(): ApiaryMap {
-        val tiles = mutableListOf<Tile>()
-        for (y in 0..10) {
-            for (x in 0..10) {
-                tiles.add(
-                    Tile(
-                        x, y, if ((x + y) % 2 == 0) Tile.LAND else
-                            Tile.WATER
-                    )
-                )
-            }
-        }
-        return ApiaryMap(tiles)
-    }
-
-    private fun island(vararg tiles: Tile): Island {
-        return Island(tiles.toSet())
-    }
-
-    private fun apiaryMap(vararg tiles: Tile): ApiaryMap {
-        return ApiaryMap(tiles.toList())
-    }
-
-    private fun waterTile(x: Int, y: Int): Tile {
-        return Tile(x, y, Tile.WATER)
-    }
-
-    private fun landTile(x: Int, y: Int): Tile {
-        return Tile(x, y, Tile.LAND)
-    }
 }

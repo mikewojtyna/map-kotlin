@@ -11,5 +11,9 @@ internal class Map(
     /**
      * All islands on this map.
      */
-    val islands: Set<Island>
+    val islands: Set<Island>,
+    /**
+     * Id used by repository layer.
+     */
+    val id: String? = null
 )
