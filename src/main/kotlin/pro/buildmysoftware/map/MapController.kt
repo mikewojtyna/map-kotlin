@@ -1,13 +1,12 @@
 package pro.buildmysoftware.map
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * Controller handling map API endpoints.
  */
 @RestController
+@RequestMapping("/api")
 internal class MapController(
     /**
      * [AppService] that will handle all operations, so this controller can
@@ -18,7 +17,7 @@ internal class MapController(
     /**
      * Creates a new map using [appService].
      */
-    @PostMapping
+    @PostMapping("/maps")
     fun createMap() {
         appService.createMap()
     }
@@ -26,8 +25,16 @@ internal class MapController(
     /**
      * Returns all islands on a map using [appService].
      */
-    @GetMapping
+    @GetMapping("/islands")
     fun islands(): Set<Island> {
         return appService.islands()
+    }
+
+    /**
+     * Returns the island by [id].
+     */
+    @GetMapping("/islands/{id}")
+    fun islandById(@PathVariable id: String): Island? {
+        return appService.islandById(id)
     }
 }

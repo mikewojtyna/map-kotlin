@@ -39,7 +39,7 @@ internal class MapControllerIntegrationTest {
 
     @DisplayName(
         "should get all islands using app-level service when GET is " +
-                "made on 'api/islands'"
+                "made on '/api/islands'"
     )
     @Test
     fun islands() {
@@ -62,5 +62,30 @@ internal class MapControllerIntegrationTest {
             .andExpect(jsonPath("$[0].landTiles[0].x", `is`(1)))
             .andExpect(jsonPath("$[0].landTiles[0].y", `is`(2)))
         verify(appService, times(1)).islands()
+    }
+
+    @DisplayName(
+        "should find island by id using app-level service when GET " +
+                "is made on /api/islands/:id"
+    )
+    @Test
+    fun islandById() {
+        // given
+        `when`(appService.islandById("island-id")).thenReturn(
+            island
+                (
+                { "island-id" },
+                landTile(1, 2)
+            )
+        )
+
+        // when
+        mockMvc.perform(get("/api/islands/{id}", "island-id"))
+            // then
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.id", `is`("island-id")))
+            .andExpect(jsonPath("$.landTiles[0].x", `is`(1)))
+            .andExpect(jsonPath("$.landTiles[0].y", `is`(2)))
+        verify(appService, times(1)).islandById("island-id")
     }
 }
