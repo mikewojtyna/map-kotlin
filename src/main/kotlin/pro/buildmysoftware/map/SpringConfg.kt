@@ -17,4 +17,13 @@ internal class SpringConfg {
     fun restTemplate(): RestTemplate {
         return RestTemplate()
     }
+
+    /**
+     * Returns a reference to the conversion function strategy currently used
+     * in the application.
+     */
+    @Bean
+    fun mapConverter(): (ApiaryMap) -> Map {
+        return ::convert
+    }
 }
