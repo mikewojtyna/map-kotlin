@@ -1,5 +1,6 @@
 package pro.buildmysoftware.map
 
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -14,8 +15,19 @@ internal class MapController(
      */
     private val appService: AppService
 ) {
+    /**
+     * Creates a new map using [appService].
+     */
     @PostMapping
     fun createMap() {
         appService.createMap()
+    }
+
+    /**
+     * Returns all islands on a map using [appService].
+     */
+    @GetMapping
+    fun islands(): Set<Island> {
+        return appService.islands()
     }
 }
