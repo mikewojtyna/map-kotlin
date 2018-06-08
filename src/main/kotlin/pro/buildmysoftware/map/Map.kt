@@ -13,13 +13,3 @@ internal class Map(
      */
     val islands: Set<Island>
 )
-
-/**
- * Island data model used in internal [Map] representation.
- */
-internal data class Island(
-    /**
-     * Land tiles which form this island.
-     */
-    val landTiles: Set<Tile>
-)
