@@ -53,7 +53,8 @@ internal class AppServiceIntegrationTest {
     @Test
     fun getIslands0() {
         // given
-        createMap()
+        // create a map with multiple islands
+        appService.createMap()
 
         // when
         val islands = appService.islands()
@@ -70,5 +71,20 @@ internal class AppServiceIntegrationTest {
 
         // then
         assertThat(islands).isEmpty()
+    }
+
+    @DisplayName("should find island by id")
+    @Test
+    fun findIslandById() {
+        // given
+        // create a map with multiple islands
+        appService.createMap()
+        val firstIsland = appService.islands().first()
+
+        // when
+        val foundFirstIsland = appService.islandById(firstIsland.id)
+
+        // then
+        assertThat(foundFirstIsland).isEqualTo(firstIsland)
     }
 }

@@ -21,7 +21,6 @@ internal class AppService(
      */
     private val mapConverter: (ApiaryMap) -> Map
 ) {
-
     /**
      * Creates a new map using [apiaryMapSupplier] as Apiary service map
      * source and saves it using the [mapRepository].
@@ -34,7 +33,15 @@ internal class AppService(
      * Returns all islands of a [Map]. If map doesn't yet exist, an empty set
      * is returned instead.
      */
-    fun islands(): Set<Island> {
-        return mapRepository.findAll().firstOrNull()?.islands ?: emptySet()
+    fun islands(): Set<Island> = findMap()?.islands ?: emptySet()
+
+    private fun findMap(): Map? = mapRepository.findAll().firstOrNull()
+
+    /**
+     * Returns an [Island] by [id]. If island with given [id] doesn't exist
+     * or [Map] doesn't exist yet - a null value is returned instead.
+     */
+    fun islandById(id: String): Island? {
+        return findMap()?.islands?.find { it.id == id }
     }
 }
