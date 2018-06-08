@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class ApiaryModelConversionTest {
+internal class ApiaryModelConversionTest {
     @DisplayName("should converted map contain all tiles of original map")
     @Test
     fun mapTiles() {
