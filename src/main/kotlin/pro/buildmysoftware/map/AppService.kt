@@ -29,4 +29,12 @@ internal class AppService(
     fun createMap() {
         mapRepository.save(mapConverter(apiaryMapSupplier()))
     }
+
+    /**
+     * Returns all islands of a [Map]. If map doesn't yet exist, an empty set
+     * is returned instead.
+     */
+    fun islands(): Set<Island> {
+        return mapRepository.findAll()[0].islands
+    }
 }

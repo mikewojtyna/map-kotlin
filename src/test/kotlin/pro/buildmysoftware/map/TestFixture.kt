@@ -1,5 +1,29 @@
 package pro.buildmysoftware.map
 
+import org.springframework.http.MediaType
+import org.springframework.test.web.client.ExpectedCount.manyTimes
+import org.springframework.test.web.client.MockRestServiceServer.createServer
+import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
+import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
+import org.springframework.web.client.RestTemplate
+
+internal fun testMapRestTemplate(): RestTemplate {
+    val restTemplate = org.springframework.web.client.RestTemplate()
+    val server = createServer(
+        restTemplate
+    )
+    server.expect(
+        manyTimes(), requestTo(
+            "/map"
+        )
+    ).andRespond(
+        withSuccess(
+            apiaryJsonResponse(), MediaType.APPLICATION_JSON_UTF8
+        )
+    )
+    return restTemplate
+}
+
 internal fun apiaryJsonResponse(): String {
     return """
         {
@@ -48,8 +72,12 @@ internal fun apiaryJsonResponse(): String {
         """
 }
 
-internal fun anyMap(): Map {
+internal fun mapWithSingleIsland(): Map {
     return Map(randomTiles().toSet(), setOf(randomIsland()))
+}
+
+internal fun anyMap(): Map {
+    return mapWithSingleIsland()
 }
 
 private fun randomIsland(): Island {
