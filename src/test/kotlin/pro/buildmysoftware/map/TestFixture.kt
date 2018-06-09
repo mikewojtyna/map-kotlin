@@ -73,6 +73,10 @@ internal fun apiaryJsonResponse(): String {
         """
 }
 
+internal fun mapWithTiles(vararg tiles: Tile): Map {
+    return Map(tiles.toSet(), emptySet())
+}
+
 internal fun mapWithSingleIsland(): Map {
     return Map(randomTiles().toSet(), setOf(randomIsland()))
 }
