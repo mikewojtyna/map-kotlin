@@ -87,4 +87,31 @@ internal class AppServiceIntegrationTest {
         // then
         assertThat(foundFirstIsland).isEqualTo(firstIsland)
     }
+
+    @DisplayName("should create non-empty ascii-art representation when map exists")
+    @Test
+    fun asciiArt0() {
+        // given
+        // create a big map
+        appService.createMap()
+
+        // when
+        val mapAsciiArt = appService.mapAsAsciiArt()
+
+        // then
+        assertThat(mapAsciiArt).isNotEmpty()
+    }
+
+    @DisplayName(
+        "should create empty ascii-art representation when map " +
+                "doesn't exist"
+    )
+    @Test
+    fun asciiArt1() {
+        // when
+        val mapAsciiArt = appService.mapAsAsciiArt()
+
+        // then
+        assertThat(mapAsciiArt).isEmpty()
+    }
 }

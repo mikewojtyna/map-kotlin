@@ -44,4 +44,12 @@ internal class AppService(
     fun islandById(id: String): Island? {
         return findMap()?.islands?.find { it.id == id }
     }
+
+    /**
+     * Returns an ascii-art representation of [Map]. If map doesn't exist
+     * yet, an empty string is returned instead.
+     */
+    fun mapAsAsciiArt(): String {
+        return findMap()?.toString() ?: ""
+    }
 }
