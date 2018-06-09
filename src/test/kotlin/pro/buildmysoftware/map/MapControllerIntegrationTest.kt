@@ -8,12 +8,12 @@ import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @WebMvcTest
 @ExtendWith(SpringExtension::class)
@@ -87,5 +87,23 @@ internal class MapControllerIntegrationTest {
             .andExpect(jsonPath("$.landTiles[0].x", `is`(1)))
             .andExpect(jsonPath("$.landTiles[0].y", `is`(2)))
         verify(appService, times(1)).islandById("island-id")
+    }
+
+    @DisplayName(
+        "should return ascii-art map representation when GET with " +
+                "Accept header 'text/plain' is made on /api/maps"
+    )
+    @Test
+    fun asciiArt() {
+        // given
+        `when`(appService.mapAsAsciiArt()).thenReturn("#X~X#")
+
+        // when
+        mockMvc.perform(get("/api/maps").accept(MediaType.TEXT_PLAIN))
+
+            // then
+            .andExpect(status().isOk)
+            .andExpect(content().string("#X~X#"))
+        verify(appService, times(1)).mapAsAsciiArt()
     }
 }

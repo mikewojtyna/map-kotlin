@@ -1,5 +1,6 @@
 package pro.buildmysoftware.map
 
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -21,6 +22,12 @@ internal class MapController(
     fun createMap() {
         appService.createMap()
     }
+
+    /**
+     * Returns ascii-art representation of map using [appService].
+     */
+    @GetMapping("/maps", produces = [MediaType.TEXT_PLAIN_VALUE])
+    fun mapAsAsciiArt() = appService.mapAsAsciiArt()
 
     /**
      * Returns all islands on a map using [appService].
