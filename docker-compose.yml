@@ -1,0 +1,13 @@
+version: '2.1'
+services:
+  map-advanon-app:
+    image: map-advanon
+    ports:
+    - 8080:8080
+    depends_on:
+      map-advanon-mongo:
+        condition: service_healthy
+  map-advanon-mongo:
+    extends:
+      file: mongo.yml
+      service: map-advanon-mongo

@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+  map-advanon-mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+    ports:
+        - 27017:27017
+    command: mongod --smallfiles
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/map-advanon --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 12
